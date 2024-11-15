@@ -32,11 +32,14 @@ http://brainwagon.org/2011/02/24/arduino-mcp4725-breakout-board/
 #define MCP4725_ADDR2 0x61   
 //For devices with A0 pulled HIGH, use 0x61
 
+
+#define LUTsize 512
+
 //Sinewave Tables were generated using this calculator:
 //http://www.daycounter.com/Calculators/Sine-Generator-Calculator.phtml
 
 
-int sintab2[512] = 
+int sintab2[LUTsize] = 
 {
   2048, 2073, 2098, 2123, 2148, 2174, 2199, 2224,
   2249, 2274, 2299, 2324, 2349, 2373, 2398, 2423,
@@ -119,6 +122,9 @@ void dacSin(int address, int lookUp){
   Wire.endTransmission();
 }
 
+
+
+
 //Send value to DAC on sin curve (input is index 0-512)
 void dacSend(int address, int value){
   value = constrain(value, 0, 4095);
@@ -131,27 +137,64 @@ void dacSend(int address, int value){
 }
 
 
+
+
+
+void dacSin2(int address, int index, float phase, float F){
+  Wire.beginTransmission(address);
+  Wire.write(64);                     // cmd to update the DAC
+  static const float fdiv = .005;
+  int sinVal = (sin(index*2*PI*F*fdiv + phase*PI)+1)*4095/2;
+  sinVal = constrain(sinVal,0,4095);
+
+
+  Wire.write(sinVal >> 4);        // the 8 most significant bits...
+  Wire.write((sinVal & 15) << 4); // the 4 least significant bits...
+  Wire.endTransmission();
+}
+
+//Makes Lissajous figure with frequency ration and phase shift (phase shift is multiplied by 1/(2pi) rads)
+void LJFigure2(float ratio, float phase, int index){
+
+  int phaseChange = (LUTsize*phase);
+  
+  dacSin2(MCP4725_ADDR, index, phase, ratio);
+  dacSin2(MCP4725_ADDR2, index,0,1);
+}
+
+
+
+
 //Makes Lissajous figure with frequency ration and phase shift (phase shift is multiplied by 1/(2pi) rads)
 void LJFigure(float ratio, float phase, int index){
 
-  int phaseChange = (512*phase);
+  int phaseChange = (LUTsize*phase);
   
-  dacSin(MCP4725_ADDR, int(ratio*(index + (phaseChange))) & 511);
+  dacSin(MCP4725_ADDR, int(ratio*(index + (phaseChange))) & (LUTsize-1));
   dacSin(MCP4725_ADDR2, index);
 }
 
 
 
 //---------------------------------------------------
-void loop()
-{
 
+
+void LJ1(){
   static int lookup = 0;
   
   // dacSin(MCP4725_ADDR, (lookup+128) & 511);
   // dacSin(MCP4725_ADDR2, lookup );
-
+  // LJFigure2(6.0/5,)
   LJFigure(6.0/5,1.0/4,lookup);
 
-  lookup = (lookup + 1) & 511;
+  lookup = (lookup + 1) & (LUTsize-1);
+}
+
+
+void loop()
+{
+  static int i = 0;
+  LJFigure2(6.0/5,1.0/4,i);
+  i++;
+  
 }
