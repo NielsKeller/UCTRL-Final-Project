@@ -39,7 +39,7 @@ void dacSin(int address, int index, float phase, float F, float fdiv){
 }
 
 
-//Makes Lissajous figure with frequency ration and phase shift (phase shift is multiplied by 1/(2pi) rads)
+//Makes Lissajous figure with frequency ratio and phase shift (phase shift is multiplied by 1/(2pi) rads)
 void LJFigure(float ratio, float phase, int index){
 
   int phaseChange = (LUTsize*phase);
