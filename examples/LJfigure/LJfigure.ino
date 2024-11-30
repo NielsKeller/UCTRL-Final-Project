@@ -39,16 +39,17 @@ void dacSin(int address, int index, float phase, float F, float fdiv){
 }
 
 
-//Makes Lissajous figure with frequency ration and phase shift (phase shift is multiplied by 1/(2pi) rads)
-void LJFigure(float ratio, float phase, int index){
-
-  int phaseChange = (LUTsize*phase);
-  
-  dacSin(MCP4725_ADDR, index, phase, ratio, .005);
-  dacSin(MCP4725_ADDR2, index,0,1, .005);
+//Makes Lissajous figure with frequency ratio and phase shift (phase shift is multiplied by 1/(2pi) rads) call in loop with incrementing i
+void LJFigure(float ratio, float phase, int index, float fdiv){  
+  dacSin(MCP4725_ADDR, index, phase, ratio, fdiv);
+  dacSin(MCP4725_ADDR2, index,0,1, fdiv);
 }
 
-
+//Makes moving Lissajous figure with passed in period in seconds with
+//frequency ratio. Call in loop with incrementing i
+void LJFigureMoving(float ratio, float period, int index, float fdiv){
+  LJFigure(ratio, millis()*2/(period*1000), index, fdiv);
+}
 
 
 void setup()
@@ -56,9 +57,15 @@ void setup()
   Wire.begin();
 }
 
-
+#define fdiv1 0.03
+#define fdiv2 0.01
 
 void loop() {
-  // put your main code here, to run repeatedly:
-  dacSin()
+
+  static int i = 0;
+  LJFigure(6.0/5, 1.0/4, i, 0.01);
+  // LJFigure(3.0/2, 7.0/8, i, 0.0051);
+  // LJFigureMoving(2/1, 3, i, fdiv1);
+  i++;
+  
 }
