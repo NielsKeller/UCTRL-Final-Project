@@ -63,8 +63,8 @@ void setup()
 void loop() {
 
   static int i = 0;
-  LJFigure(6.0/5, 1.0/4, i, 0.01);
-  // LJFigure(3.0/2, 7.0/8, i, 0.0051);
+  // LJFigure(6.0/5, 1.0/4, i, 0.01);
+  LJFigure(3.0/2, 7.0/8, i, 0.0051);
   // LJFigureMoving(2/1, 3, i, fdiv1);
   i++;
   
