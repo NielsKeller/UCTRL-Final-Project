@@ -46,3 +46,41 @@ void XYscope::LJFigure(float ratio, float phase, int index, float fdiv){
 void XYscope::LJFigureMoving(float ratio, float period, int index, float fdiv){
   LJFigure(ratio, millis()*2/(period*1000), index, fdiv);
 }
+
+
+//Send value to DAC constrained from 0 to 4095 (12-bits) (From Adafruit mainly)
+void XYscope::dacSend(int address, int value){
+  value = constrain(value, 0, 4095);
+
+  Wire.beginTransmission(address);
+  Wire.write(64);                     // cmd to update the DAC
+  Wire.write(value >> 4);        // the 8 most significant bits...
+  Wire.write((value & 15) << 4); // the 4 least significant bits...
+  Wire.endTransmission();
+}
+
+
+// Line sclaed to 1000x1000
+void XYscope::lineSc(int x1, int x2, int y1, int y2, long pts){
+
+  x1 = map(x1,0,1000,0,4095);
+  x2 = map(x2,0,1000,0,4095);
+  y1 = map(y1,0,1000,0,4095);
+  y2 = map(y2,0,1000,0,4095);
+
+  int dy = (y2-y1)/pts;
+  int dx = (x2-x1)/pts;
+
+  int Xval = x1;
+  int yval = y1;
+
+  for(int i=0; i<pts; i++){
+
+
+    dacSend(_MCP4725_ADDR, Xval);
+    dacSend(_MCP4725_ADDR2, yval);
+
+    Xval += dx;
+    yval += dy;
+  }
+}
