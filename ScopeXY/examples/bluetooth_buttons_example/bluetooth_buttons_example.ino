@@ -9,6 +9,9 @@
 #define MCP4725_ADDR 0x60  
 #define MCP4725_ADDR2 0x61   
 
+static const int xAd = 0x60;
+static const int yAd = 0x61;
+
 //////////////////////////////////////////////
 //        RemoteXY include library          //
 //////////////////////////////////////////////
@@ -74,7 +77,7 @@ void dacSend(int address, int value){
 void dacSin(int address, int index, float phase, float F, float fdiv){
   Wire.beginTransmission(address);
   Wire.write(64);                     // cmd to update the DAC
-
+  
   int sinVal = (sin(index*2*PI*F*fdiv + phase*PI)+1)*4095/2;
   sinVal = constrain(sinVal,0,4095);
 
@@ -84,6 +87,44 @@ void dacSin(int address, int index, float phase, float F, float fdiv){
   Wire.endTransmission();
 }
 
+void line(int x1, int x2, int y1, int y2, long pts){
+  
+  for(int i=0; i<pts; i++){
+    int Xval = x1+map(i,0,pts,x1,x2);
+    int Yval = y1+map(i,0,pts,y1,y2);
+
+
+    dacSend(xAd, Xval);
+    dacSend(yAd, Yval);
+  }
+}
+
+// Line sclaed to 1000x1000
+void lineSc(int x1, int x2, int y1, int y2, long pts){
+
+  x1 = map(x1,0,1000,0,4095);
+  x2 = map(x2,0,1000,0,4095);
+  y1 = map(y1,0,1000,0,4095);
+  y2 = map(y2,0,1000,0,4095);
+
+  int dy = (y2-y1)/pts;
+  int dx = (x2-x1)/pts;
+
+  int Xval = x1;
+  int yval = y1;
+
+  for(int i=0; i<pts; i++){
+    // int Xval = x1+map(i,0,pts,x1,x2);
+    // int Yval = y1+map(i,0,pts,y1,y2);
+
+
+    dacSend(xAd, Xval);
+    dacSend(yAd, yval);
+
+    Xval += dx;
+    yval += dy;
+  }
+}
 
 //Makes Lissajous figure with frequency ratio and phase shift (phase shift is multiplied by 1/(2pi) rads) call in loop with incrementing i
 void LJFigure(float ratio, float phase, int index, float fdiv){
@@ -114,13 +155,43 @@ void loop() {
   static int i = 0;
 
   if (RemoteXY.Static_1 == 1){
-    LJFigure(6.0/5, 1.0/4, i, 0.01);
-    i++;
-  }
-  if (RemoteXY.Static_2 == 1){
     LJFigure(3.0/2, 7.0/8, i, 0.0051);
     i++;
   }
+
+  if (RemoteXY.Static_2 == 1){
+    const int pt = 50;
+    const int ptLong = 200;
+
+    lineSc( 50,   800,    640,   500, ptLong);
+    lineSc(790,   900,    535,   950, ptLong); //vals off on scope here, manual adjust
+    lineSc(900,   900,    950,   300, ptLong);
+  
+    //Legs
+    lineSc(900,   800,    300,   100, pt);
+    lineSc(800,   800,    100,   300, pt);
+    lineSc(800,   700,    300,   100, pt);
+    lineSc(700,   700,    100,   300, pt);
+  
+    lineSc(700,   600,    300,   300, pt);
+  
+    lineSc(600,   500,    300,   100, pt);
+    lineSc(500,   500,    100,   300, pt);
+    lineSc(500,   400,    300,   100, pt);
+
+    //head
+    lineSc(400,   400,    100,   900, ptLong);
+    lineSc(400,   300,    900,   700, pt);
+    lineSc(300,   300,    700,   900, pt);
+    lineSc(300,   200,    900,   700, pt);
+    lineSc(200,   50,    700,   650, pt);
+
+    //eyes
+    lineSc(250,   250,    645,   695, pt);
+    lineSc(350,   350,    645,   695, pt);
+    
+  }
+
   if (RemoteXY.Moving == 1){
     LJFigureMoving(2/1, 3, i, fdiv1);
     i++;
