@@ -10,7 +10,7 @@ The goal of this project was to have a microcontroller use an oscilloscope's X-Y
 ## Code
 
 ## Images
-![alt text](/assets/images/Images/CoverDemo.jpeg)
+![alt text](https://github.com/NielsKeller/UCTRL-Final-Project/blob/main/Images/CoverDemo.jpeg)
 
 ![alt text](/assets/images/Images/ExampleDemo.png)
 
