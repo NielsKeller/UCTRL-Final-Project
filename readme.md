@@ -10,8 +10,8 @@ The goal of this project was to have a microcontroller use an oscilloscope's X-Y
 ## Code
 
 ## Images
-![alt text](https://github.com/NielsKeller/UCTRL-Final-Project/blob/main/Images/CoverDemo.jpeg)
+![LJ figure](https://github.com/NielsKeller/UCTRL-Final-Project/blob/main/Images/CoverDemo.jpeg)
 
-![alt text](/assets/images/Images/ExampleDemo.png)
+![Geo Dog](https://github.com/NielsKeller/UCTRL-Final-Project/blob/main/Images/Geodog.jpeg)
 
-<!-- ![alt text](assets/images/(Images\Geodog.jpeg) -->
+<!-- ![Geo Dog](https://github.com/NielsKeller/UCTRL-Final-Project/blob/main/Images/Geodog.jpeg) -->
