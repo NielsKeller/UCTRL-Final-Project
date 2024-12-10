@@ -10,8 +10,8 @@ The goal of this project was to have a microcontroller use an oscilloscope's X-Y
 ## Code
 
 ## Images
-![alt text](Images\CoverDemo.jpeg)
+![alt text](/assets/images/Images/CoverDemo.jpeg)
 
-![alt text](Images\ExampleDemo.png)
+![alt text](/assets/images/Images/ExampleDemo.png)
 
-![alt text](Images\Geodog.jpeg)
+<!-- ![alt text](assets/images/(Images\Geodog.jpeg) -->
