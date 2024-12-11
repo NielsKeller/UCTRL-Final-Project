@@ -33,7 +33,7 @@ void XYscope::dacSin(int address, int index, float phase, float F, float fdiv){
 
 
 //Makes Lissajous figure with frequency ratio and phase shift 
-//(phase shift is multiplied by 1/(2pi) rads) call in loop with incrementing i
+//(phase shift is multiplied by pi rads) call in loop with incrementing i
 void XYscope::LJFigure(float ratio, float phase, int index, float fdiv){  
   dacSin(_MCP4725_ADDR, index, phase, ratio, fdiv);
   dacSin(_MCP4725_ADDR2, index,0,1, fdiv);
