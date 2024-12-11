@@ -91,5 +91,3 @@ https://github.com/NielsKeller/ScopeXY
 
 ![Circuit Design](https://github.com/NielsKeller/ScopeXY/blob/main/Images/Circuit.png)
 
-![Circuit Design](https://github.com/NielsKeller/ScopeXY/blob/main/Images/Circuit.png)
-
