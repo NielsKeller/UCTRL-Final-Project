@@ -19,7 +19,6 @@ The goal of this project was to have a microcontroller use an oscilloscope's X-Y
 
 * Arduino UNO
 * MCP4725 DAC (x2)
-* Oscilloscope (for display)
 * PCB
 * Bluetooth JDY-16 BLE Module
 
@@ -87,7 +86,11 @@ Unfortunately only display properly on GitHub.<br>
 https://github.com/NielsKeller/ScopeXY 
 
 
-![LJ figure](https://github.com/NielsKeller/UCTRL-Final-Project/blob/main/Images/CoverDemo.jpeg)
+![LJ figure](https://github.com/NielsKeller/ScopeXY/blob/main/Images/CoverDemo.jpeg)
 
-![Geo Dog](https://github.com/NielsKeller/UCTRL-Final-Project/blob/main/Images/Geodog.jpeg)
+![Geo Dog](https://github.com/NielsKeller/ScopeXY/blob/main/Images/Geodog.jpeg)
+
+![Circuit Design](https://github.com/NielsKeller/ScopeXY/blob/main/Images/Circuit.png)
+
+![Circuit Design](https://github.com/NielsKeller/ScopeXY/blob/main/Images/Circuit.png)
 
