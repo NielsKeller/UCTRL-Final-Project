@@ -79,7 +79,7 @@ Parameters:
 * int y2 &rarr; Second y point
 * long pts &rarr; Total number of points to plot
 
-## Example Images
+## Images
 
 Unfortunately only display properly on GitHub.<br>
 https://github.com/NielsKeller/ScopeXY 
