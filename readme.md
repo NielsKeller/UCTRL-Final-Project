@@ -1,4 +1,4 @@
-### CMPE3815 Final Project: X-Y Oscilloscope Drawer
+# CMPE3815 Final Project: X-Y Oscilloscope Drawer
 
 CMPE 3815, Microcontroller Systems\
 Niels Keller\
@@ -21,7 +21,6 @@ The goal of this project was to have a microcontroller use an oscilloscope's X-Y
 * MCP4725 DAC (x2)
 * PCB
 * Bluetooth JDY-16 BLE Module
-
 
 ## Basic Documentation
 
@@ -55,8 +54,8 @@ Parameters:
 * int index &rarr; Index on the sinusoid. Controls the input value
 * float fdiv &rarr; Speed modifier $\approx$ 0.01 . Should be roughly the same for most figures for each scope.
 
-
 ##
+
     void LJFigureMoving(float ratio, float period, int index, float fdiv);
 
 Display moving Lissajous curve.<br>
